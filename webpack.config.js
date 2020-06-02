@@ -1,10 +1,16 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 module.exports = {
   entry: "./src/index",
   output: {
     path: __dirname + "/public",
     publicPath: "/",
     filename: "[name].bundle.js",
+  },
+  devServer: {
+    contentBase: "./dist",
+    port: "3001",
   },
   resolve: {
     extensions: [".ts", ".tsx", ".jsx", ".js"],
@@ -30,5 +36,11 @@ module.exports = {
       },
     ],
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [
+    new MiniCssExtractPlugin(),
+    // The HtmlWebpackPlugin simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
 };
